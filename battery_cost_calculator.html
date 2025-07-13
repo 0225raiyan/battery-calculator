@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Battery চার্জ খরচ ক্যালকুলেটর</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      padding: 40px;
+      text-align: center;
+      max-width: 400px;
+      margin: auto;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #0078d7;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005ea0;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #2f8f2f;
+      min-height: 24px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 20px;
+      text-align: left;
+    }
+    .username {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔋 Battery চার্জ খরচ ক্যালকুলেটর</h1>
+  
+  <div class="username">রাফিন ভাইয়ের ক্যালকুলেটর</div>
+
+  <label for="mahInput">Battery Capacity (mAh):</label>
+  <input type="number" id="mahInput" placeholder="যেমন: 20000" min="1" />
+
+  <label for="voltInput">Battery Voltage (V):</label>
+  <input type="number" id="voltInput" value="3.7" step="0.1" min="0.1" />
+
+  <label for="rateInput">Electric Unit Rate (টাকা):</label>
+  <input type="number" id="rateInput" value="8" step="0.1" min="0" />
+
+  <button onclick="calculate()">হিসাব করো</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    function calculate() {
+      const mAh = parseFloat(document.getElementById('mahInput').value);
+      const voltage = parseFloat(document.getElementById('voltInput').value);
+      const unitRate = parseFloat(document.getElementById('rateInput').value);
+
+      if (isNaN(mAh) || mAh <= 0) {
+        document.getElementById('result').innerText = "দয়া করে সঠিক mAh দিন।";
+        return;
+      }
+      if (isNaN(voltage) || voltage <= 0) {
+        document.getElementById('result').innerText = "দয়া করে সঠিক ভোল্টেজ দিন।";
+        return;
+      }
+      if (isNaN(unitRate) || unitRate < 0) {
+        document.getElementById('result').innerText = "দয়া করে সঠিক ইউনিট রেট দিন।";
+        return;
+      }
+
+      const energyKWh = (mAh * voltage) / 1000000; // kWh
+      const cost = energyKWh * unitRate;
+
+      document.getElementById('result').innerText =
+        `প্রায় ${cost.toFixed(3)} টাকা খরচ হবে ${mAh} mAh ব্যাটারি চার্জ করতে।`;
+    }
+  </script>
+</body>
+</html>
